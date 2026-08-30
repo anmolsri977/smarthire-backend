@@ -1,4 +1,5 @@
 package com.smarthire.security;
+import jakarta.servlet.http.HttpServletRequest;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,6 +24,19 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Autowired
     private UserDetailsService userDetailsService;
+
+
+    @Override
+protected boolean shouldNotFilter(HttpServletRequest request) {
+    String path = request.getRequestURI();
+    return path.equals("/") 
+        || path.equals("/index.html")
+        || path.startsWith("/static/")
+        || path.equals("/manifest.json")
+        || path.equals("/robots.txt")
+        || path.equals("/favicon.ico")
+        || path.startsWith("/api/auth/");
+}
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
