@@ -14,8 +14,7 @@ public class CorsConfig {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of(
-        "https://turbo-giggle-g46g4ww4wpv7c5w5-8080.app.github.dev",
-        "https://turbo-giggle-g46g4ww4wpv7c5w5-3000.app.github.dev"
+                "http://localhost:3000"
         ));
         config.setAllowedMethods(List.of("GET","POST","PUT","DELETE","OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
