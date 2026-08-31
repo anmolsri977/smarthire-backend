@@ -15,7 +15,7 @@ function Login() {
     try {
       const res = await api.post('/api/auth/login', form);
       localStorage.setItem('token', res.data.token);
-      navigate('/dashboard');
+      window.location.href = '/dashboard'; // navigate ki jagah ye use karo
     } catch (err) {
       setError('Invalid email or password!');
     }
