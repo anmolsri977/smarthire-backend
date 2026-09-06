@@ -15,6 +15,7 @@ function Sidebar() {
         { label: 'Applications', icon: '💼', path: '/dashboard' },
         { label: 'Browse Jobs', icon: '🌐', path: '/jobs' },
         { label: 'AI Assistant', icon: '🤖', path: '/ai' },
+        { label: 'Analytics', icon: '📈', path: '/analytics' },
     ];
 
     return (

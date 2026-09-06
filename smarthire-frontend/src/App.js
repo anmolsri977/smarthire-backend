@@ -6,6 +6,7 @@ import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import Jobs from './pages/Jobs';
 import AIAssistant from './pages/AIAssistant';
+import Analytics from './pages/Analytics';
 import './index.css';
 
 
@@ -20,6 +21,7 @@ function App() {
           <Route path="/register" element={<Register />} />
             <Route path="/jobs" element={isLoggedIn ? <Jobs /> : <Navigate to="/login" />} />
             <Route path="/ai" element={isLoggedIn ? <AIAssistant /> : <Navigate to="/login" />} />
+            <Route path="/analytics" element={isLoggedIn ? <Analytics /> : <Navigate to="/login" />} />
           <Route
               path="/dashboard"
               element={isLoggedIn ? <Dashboard /> : <Navigate to="/login" />}

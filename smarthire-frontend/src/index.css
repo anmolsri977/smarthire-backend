@@ -585,3 +585,53 @@ body {
   color: #8888aa;
   font-size: 1rem;
 }
+/* Analytics */
+.analytics-rate-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.rate-card {
+  background: #16213e;
+  border-radius: 12px;
+  padding: 1.2rem;
+  text-align: center;
+  border: 1px solid #6c63ff22;
+}
+
+.rate-card h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #6c63ff;
+  margin-bottom: 0.3rem;
+}
+
+.rate-card p {
+  color: #8888aa;
+  font-size: 0.85rem;
+}
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.chart-card {
+  background: #16213e;
+  border-radius: 12px;
+  padding: 1.5rem;
+  border: 1px solid #6c63ff22;
+}
+
+.chart-card h3 {
+  color: #6c63ff;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.chart-card.full-width {
+  grid-column: 1 / -1;
+}
