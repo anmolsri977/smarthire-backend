@@ -10,28 +10,58 @@ const CATEGORIES = [
     { label: 'Product', value: 'product' },
 ];
 
+const LOCATIONS = [
+    { label: 'Worldwide', value: '' },
+    { label: 'India', value: 'India' },
+    { label: 'USA', value: 'USA' },
+    { label: 'UK', value: 'UK' },
+    { label: 'Canada', value: 'Canada' },
+    { label: 'Europe', value: 'Europe' },
+    { label: 'Remote', value: 'Remote' },
+];
+
 function Jobs() {
     const [jobs, setJobs] = useState([]);
     const [loading, setLoading] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('software-dev');
+    const [selectedLocation, setSelectedLocation] = useState('');
     const [error, setError] = useState('');
 
     const fetchJobs = async () => {
         setLoading(true);
         setError('');
+        setJobs([]);
         try {
-            const res = await fetch(
-                `https://remotive.com/api/remote-jobs?category=${selectedCategory}&limit=20`
-            );
+            let url = `https://remotive.com/api/remote-jobs?category=${selectedCategory}&limit=20`;
+
+            const res = await fetch(url);
             const data = await res.json();
-            const filtered = searchQuery
-                ? data.jobs.filter(job =>
+
+            let filtered = data.jobs;
+
+            // Filter by search query
+            if (searchQuery) {
+                filtered = filtered.filter(job =>
                     job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                     job.company_name.toLowerCase().includes(searchQuery.toLowerCase())
-                )
-                : data.jobs;
+                );
+            }
+
+            // Filter by location
+            if (selectedLocation) {
+                filtered = filtered.filter(job =>
+                    job.candidate_required_location &&
+                    job.candidate_required_location.toLowerCase().includes(selectedLocation.toLowerCase())
+                );
+            }
+
             setJobs(filtered);
+
+            if (filtered.length === 0) {
+                setError('No jobs found for selected filters. Try different options!');
+            }
+
         } catch (err) {
             setError('Failed to fetch jobs. Please try again!');
         }
@@ -62,6 +92,7 @@ function Jobs() {
                         <h2>Browse Live Jobs 🌐</h2>
                     </div>
 
+                    {/* Search + Filters */}
                     <div className="jobs-search-section">
                         <div className="jobs-search-row">
                             <input
@@ -71,25 +102,48 @@ function Jobs() {
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                             />
-                            <select
-                                className="category-select"
-                                value={selectedCategory}
-                                onChange={(e) => setSelectedCategory(e.target.value)}
-                            >
-                                {CATEGORIES.map(cat => (
-                                    <option key={cat.value} value={cat.value}>
-                                        {cat.label}
-                                    </option>
-                                ))}
-                            </select>
-                            <button className="add-btn" onClick={fetchJobs}>
-                                Search Jobs
+                        </div>
+                        <div className="jobs-filter-row">
+                            <div className="filter-group">
+                                <label>Category</label>
+                                <select
+                                    className="category-select"
+                                    value={selectedCategory}
+                                    onChange={(e) => setSelectedCategory(e.target.value)}
+                                >
+                                    {CATEGORIES.map(cat => (
+                                        <option key={cat.value} value={cat.value}>
+                                            {cat.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <div className="filter-group">
+                                <label>Location</label>
+                                <select
+                                    className="category-select"
+                                    value={selectedLocation}
+                                    onChange={(e) => setSelectedLocation(e.target.value)}
+                                >
+                                    {LOCATIONS.map(loc => (
+                                        <option key={loc.value} value={loc.value}>
+                                            {loc.label}
+                                        </option>
+                                    ))}
+                                </select>
+                            </div>
+                            <button className="add-btn search-jobs-btn" onClick={fetchJobs}>
+                                🔍 Search Jobs
                             </button>
                         </div>
                     </div>
 
                     {loading && <p className="empty-state">Loading live jobs... ⏳</p>}
-                    {error && <p className="error">{error}</p>}
+                    {error && <p className="empty-state">{error}</p>}
+
+                    {!loading && jobs.length > 0 && (
+                        <p className="jobs-count">Found {jobs.length} jobs</p>
+                    )}
 
                     {!loading && jobs.length > 0 && (
                         <div className="live-jobs-grid">
@@ -130,7 +184,7 @@ function Jobs() {
 
                     {!loading && jobs.length === 0 && !error && (
                         <p className="empty-state">
-                            Select a category and click "Search Jobs" to browse live opportunities! 🚀
+                            Select filters and click "Search Jobs" to browse opportunities! 🚀
                         </p>
                     )}
                 </div>

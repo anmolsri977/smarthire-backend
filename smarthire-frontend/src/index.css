@@ -635,3 +635,33 @@ body {
 .chart-card.full-width {
   grid-column: 1 / -1;
 }
+
+.jobs-filter-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-end;
+  margin-top: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.filter-group label {
+  color: #8888aa;
+  font-size: 0.8rem;
+}
+
+.search-jobs-btn {
+  height: 40px;
+  padding: 0 1.5rem;
+}
+
+.jobs-count {
+  color: #8888aa;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
